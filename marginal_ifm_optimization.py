@@ -23,9 +23,9 @@ results = []
 for col in df.columns:
     if col in ['Longitude', 'Latitude', 'geometry']: # Skip coordinate metadata if present
         continue
-        
+
     data = df[col].dropna()
-    if len(data) == 0: 
+    if len(data) == 0:
         continue
 
     # Fit Log-Normal
