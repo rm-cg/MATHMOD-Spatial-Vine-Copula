@@ -1,7 +1,8 @@
-# DAY 10: Theoretical and Empirical Spatial Tail Dependence Estimation
+# DAY 10: Theoretical and Empirical Spatial Tail Dependence Estimation (Student-t Final Patch)
 
 import pandas as pd
 import numpy as np
+import scipy.stats as stats
 import os
 
 print("Executing Day 10: Spatial Tail Dependence Estimation...")
@@ -26,37 +27,56 @@ print("Computing theoretical limits and empirical estimators for extreme anomali
 for index, row in tree1_df.iterrows():
     node1 = row['Source_Node']
     node2 = row['Target_Node']
-    family = row['Copula_Family']
-    par = row['Parameter_1']
+    family = str(row['Copula_Family']).lower()
+    
+    # THE ULTIMATE FIX: Strip brackets, split the string, and use pop(0) to bypass bracket errors
+    par_raw = str(row['Parameter_1']).replace('[', '').replace(']', '').replace(',', ' ').strip()
+    par_elements = par_raw.split()
+    
+    # Safely extract the first number by popping it off the list
+    par_str = par_elements.pop(0)
+    par = float(par_str)
+    
+    # Safely extract the second number by popping it off the list (if it exists)
+    if len(par_elements) > 0:
+        par2_str = par_elements.pop(0)
+        par2 = float(par2_str)
+    else:
+        # Fallback if it was saved normally
+        par2_raw = str(row['Parameter_2']).replace('[', '').replace(']', '').strip()
+        par2 = float(par2_raw) if par2_raw not in ['nan', 'None', ''] else np.nan
     
     # 1. Theoretical Tail Dependence
     theo_lam_U = 0.0
     theo_lam_L = 0.0
     
-    if family == 'Gumbel':
-        # Gumbel has upper tail dependence: 2 - 2^(1/theta)
-        theo_lam_U = 2.0 - 2.0**(1.0 / par) if par >= 1 else 0.0
-    elif family == 'Clayton':
-        # Clayton has lower tail dependence: 2^(-1/theta)
-        theo_lam_L = 2.0**(-1.0 / par) if par > 0 else 0.0
-        
+    if 'gumbel' in family:
+        theo_lam_U = 2.0 - 2.0**(1.0 / par) if par >= 1.0 else 0.0
+    elif 'clayton' in family:
+        theo_lam_L = 2.0**(-1.0 / par) if par > 0.0 else 0.0
+    elif 'student' in family or family == 't':
+        rho = par
+        nu = par2
+        if not np.isnan(nu) and nu > 0 and -1.0 < rho < 1.0:
+            t_val = -np.sqrt(nu + 1.0) * np.sqrt((1.0 - rho) / (1.0 + rho))
+            tail_dep = 2.0 * stats.t.cdf(t_val, df=nu + 1.0)
+            theo_lam_U = tail_dep
+            theo_lam_L = tail_dep
+
     # 2. Empirical Tail Dependence
     u1 = u_df[node1].values
     u2 = u_df[node2].values
     
-    # Upper-tail empirical estimator: [1 / n(1-t)] * sum(U1 > t & U2 > t)
     emp_lam_U = np.sum((u1 > t_upper) & (u2 > t_upper)) / (n * (1.0 - t_upper))
-    
-    # Lower-tail empirical estimator: [1 / nt] * sum(U1 <= t & U2 <= t)
     emp_lam_L = np.sum((u1 <= t_lower) & (u2 <= t_lower)) / (n * t_lower)
     
     results.append({
         'Spatial_Node_Pair': f"{node1} - {node2}",
-        'Copula_Family': family,
-        'Theoretical_Lambda_U': theo_lam_U,
-        'Empirical_Lambda_U': emp_lam_U,
-        'Theoretical_Lambda_L': theo_lam_L,
-        'Empirical_Lambda_L': emp_lam_L
+        'Copula_Family': row['Copula_Family'],
+        'Theoretical_Lambda_U': round(theo_lam_U, 4),
+        'Empirical_Lambda_U': round(emp_lam_U, 4),
+        'Theoretical_Lambda_L': round(theo_lam_L, 4),
+        'Empirical_Lambda_L': round(emp_lam_L, 4)
     })
 
 # Save the mathematical array
