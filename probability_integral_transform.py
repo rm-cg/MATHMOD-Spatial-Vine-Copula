@@ -13,7 +13,7 @@ print("Probability Integral Transform (PIT)...")
 
 # Define paths safely
 base_path = '/content/drive/MyDrive/RESEARCH PAPERS/MATHEMATICAL \
-MODELLING/A Spatial Copula Mathematical Model for Evaluating Regional Economic Dependencies using PhilSA Nighttime Light Radiance/MATHMOD_Official_Final_Submission_Archive'
+MODELLING/Spatial Vine Copula/MATHMOD_Official_Final_Submission_Archive'
 csv_folder = os.path.join(base_path, 'Spatial_Matrices_CSV')
 plot_folder = os.path.join(base_path, 'High_Res_Diagnostic_Plots')
 os.makedirs(plot_folder, exist_ok=True)

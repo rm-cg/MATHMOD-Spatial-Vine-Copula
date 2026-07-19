@@ -10,8 +10,7 @@ import os
 print("Inference Functions for Margins (IFM) and Parametric MLE...")
 
 # Define paths
-folder_path = '/content/drive/MyDrive/RESEARCH PAPERS/MATHEMATICAL MODELLING/A Spatial Copula Mathematical Model for Evaluating Regional \
-Economic Dependencies using PhilSA Nighttime Light Radiance/MATHMOD_Official_Final_Submission_Archive/Spatial_Matrices_CSV'
+folder_path = '/content/drive/MyDrive/RESEARCH PAPERS/MATHEMATICAL MODELLING/Spatial Vine Copula/MATHMOD_Official_Final_Submission_Archive/Spatial_Matrices_CSV'
 input_file = os.path.join(folder_path, 'Filtered_Proxy_NTL_Matrix.csv')
 output_file = os.path.join(folder_path, 'Marginal_Parameters_Summary.csv')
 

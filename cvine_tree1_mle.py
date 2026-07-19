@@ -12,8 +12,7 @@ import os
 print("Bivariate Copula Selection Pool and Tree 1 MLE Initialization...")
 
 # Define paths safely
-base_path = '/content/drive/MyDrive/RESEARCH PAPERS/MATHEMATICAL MODELLING/A Spatial Copula Mathematical Model for Evaluating \
-Regional Economic Dependencies using PhilSA Nighttime Light Radiance/MATHMOD_Official_Final_Submission_Archive/\
+base_path = '/content/drive/MyDrive/RESEARCH PAPERS/MATHEMATICAL MODELLING/Spatial Vine Copula/MATHMOD_Official_Final_Submission_Archive/\
 Spatial_Matrices_CSV'
 data_file = os.path.join(base_path, 'Uniform_Pseudo_Obs_Matrix.csv')
 edges_file = os.path.join(base_path, 'Tree1_MST_Edge_List.csv')

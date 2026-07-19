@@ -10,8 +10,7 @@ import os
 print("Covariate Extraction (LST, NDVI, NDWI)...")
 
 # Define paths safely
-base_path = '/content/drive/MyDrive/RESEARCH PAPERS/MATHEMATICAL MODELLING/A Spatial Copula Mathematical \
-Model for Evaluating Regional Economic Dependencies using PhilSA Nighttime Light Radiance/MATHMOD_Official_Final_Submission_Archive/Spatial_Matrices_CSV'
+base_path = '/content/drive/MyDrive/RESEARCH PAPERS/MATHEMATICAL MODELLING/Spatial Vine Copula/MATHMOD_Official_Final_Submission_Archive/Spatial_Matrices_CSV'
 input_csv = os.path.join(base_path, 'Filtered_Proxy_NTL_Matrix.csv')
 output_csv = os.path.join(base_path, 'Physical_Environmental_Covariates.csv')
 

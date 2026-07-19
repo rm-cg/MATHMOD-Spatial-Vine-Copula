@@ -4,7 +4,7 @@ import os
 
 print("Spatiotemporal Matrix Construction and Zero-Inflation Anomaly Filtering...")
 
-folder_path = '/content/drive/MyDrive/RESEARCH PAPERS/MATHEMATICAL MODELLING/A Spatial Copula Mathematical Model for Evaluating Regional Economic Dependencies using PhilSA Nighttime Light Radiance/MATHMOD_Official_Final_Submission_Archive/Spatial_Matrices_CSV'
+folder_path = '/content/drive/MyDrive/RESEARCH PAPERS/MATHEMATICAL MODELLING/Spatial Vine Copula/MATHMOD_Official_Final_Submission_Archive/Spatial_Matrices_CSV'
 file_path = os.path.join(folder_path, 'Filtered_Proxy_NTL_Matrix.csv')
 
 # Task 3: Load matrix and verify mathematical shape Y ∈ R^(n x d)

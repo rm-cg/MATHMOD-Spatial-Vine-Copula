@@ -9,8 +9,8 @@ import os
 
 print("Executing Day 8: Conditional Pseudo-Observations and Tree 2 Initialization...")
 
-base_csv_path = '/content/drive/MyDrive/RESEARCH PAPERS/MATHEMATICAL MODELLING/A Spatial Copula Mathematical Model for Evaluating Regional Economic Dependencies using PhilSA Nighttime Light Radiance/MATHMOD_Official_Final_Submission_Archive/Spatial_Matrices_CSV'
-plot_folder = '/content/drive/MyDrive/RESEARCH PAPERS/MATHEMATICAL MODELLING/A Spatial Copula Mathematical Model for Evaluating Regional Economic Dependencies using PhilSA Nighttime Light Radiance/MATHMOD_Official_Final_Submission_Archive/High_Res_Diagnostic_Plots'
+base_csv_path = '/content/drive/MyDrive/RESEARCH PAPERS/MATHEMATICAL MODELLING/Spatial Vine Copula/MATHMOD_Official_Final_Submission_Archive/Spatial_Matrices_CSV'
+plot_folder = '/content/drive/MyDrive/RESEARCH PAPERS/MATHEMATICAL MODELLING/Spatial Vine Copula/MATHMOD_Official_Final_Submission_Archive/High_Res_Diagnostic_Plots'
 os.makedirs(plot_folder, exist_ok=True)
 
 data_file = os.path.join(base_csv_path, 'Uniform_Pseudo_Obs_Matrix.csv')
@@ -33,20 +33,20 @@ cond_pseudo_obs = pd.DataFrame(index=u_df.index)
 tree2_results = []
 
 if not tree1_df.empty:
-    # THE FIX: Added  so it extracts the actual string name (e.g. 'NCR_Manila')
-    root_node = tree1_df['Source_Node'].mode() 
+    # THE FIX: Added so it extracts the actual string name (e.g. 'NCR_Manila')
+    root_node = tree1_df['Source_Node'].mode()[0] # Extract the scalar value from the Series
     cond_pseudo_obs[root_node] = u_df[root_node]
-    
+
     connected_edges = tree1_df[tree1_df['Source_Node'] == root_node]
-    
+
     for index, row in connected_edges.iterrows():
         target = row['Target_Node']
         u_data = u_df[[root_node, target]].dropna().values
-        
+
         # THE FIX: Empty copula initialization for the new library version
         bicop = pv.Bicop()
         bicop.select(u_data, controls)
-        
+
         cond_vals = bicop.hfunc1(u_data)
         cond_pseudo_obs[f"{target}|{root_node}"] = cond_vals
 
@@ -56,8 +56,8 @@ if not tree1_df.empty:
             'Source_Node': f"{target}|{root_node}",
             'Target_Node': root_node,
             'Copula_Family': bicop.family.name,
-            'Parameter_1': params if len(params) > 0 else np.nan,
-            'Parameter_2': params[2] if len(params) > 1 else np.nan,
+            'Parameter_1': params[0] if len(params) > 0 else np.nan,
+            'Parameter_2': params[1] if len(params) > 1 else np.nan,
             'Tau': bicop.tau,
             'AIC': bicop.aic(u_data)
         })
