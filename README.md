@@ -1,12 +1,18 @@
 
 # **A Spatio-Temporal Vine Copula Mathematical Model for High-Dimensional Dependence in PhilSA Nighttime Light Radiance**
+
 MATHMOD-Spatial-Vine-Copula
 _Thesis Mathematical Modelling Project_
 
 (current temporary sub-data: Google Engine)
 
-This repository will contain the full execution pipeline and methodology for modeling high-dimensional spatial dependence in **Philippine Satellite Agency (PhilSA) Nighttime Light (NTL)** radiance data. The framework employs a **Spatio-Temporal C-Vine Copula** to capture non-linear, asymmetric spatial dependencies, specifically targeting extreme physical radiance anomalies like sensor blooming (overglow) and atmospheric attenuation.Repository Structure
 
+
+This repository will contain the full execution pipeline and methodology for modeling high-dimensional spatial dependence in **Philippine Satellite Agency (PhilSA) Nighttime Light (NTL)** radiance data. The framework employs a **Spatio-Temporal C-Vine Copula** to capture non-linear, asymmetric spatial dependencies, specifically targeting extreme physical radiance anomalies like sensor blooming (overglow) and atmospheric attenuation.
+
+---
+
+**Repository Structure**
 
 The master directory MATHMOD_Official_Final_Submission_Archive is organized as follows:
 
@@ -18,6 +24,7 @@ The master directory MATHMOD_Official_Final_Submission_Archive is organized as f
 
 - **ETD_Manuscript**: Houses the formal LaTeX-based thesis documentation and methodology chapters.
 
+---
 
 **Key Methodological Components**
 
@@ -29,6 +36,7 @@ The master directory MATHMOD_Official_Final_Submission_Archive is organized as f
 
 - **Validation Framework:** Comprehensive benchmarking against classical spatial econometrics (SAR models), machine learning baselines (Random Forest), and statistical validity tests (Cramér-von Mises, Diebold-Mariano, Vuong’s Test).
 
+---
 
 **Technical Stack**
 
@@ -41,6 +49,7 @@ The master directory MATHMOD_Official_Final_Submission_Archive is organized as f
   - networkx (Graph topology)
   - esda
   - PySAL (Spatial autocorrelation).
+
 
 
 **Repository Usage**
