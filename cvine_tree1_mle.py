@@ -1,3 +1,9 @@
+
+# Generates the Python script to execute Maximum Likelihood Estimation (MLE) for Tree 1.
+# It loads the MST edges and uniform pseudo-observations, defines the specific copula family pool 
+# (Gaussian, Student-t, Clayton, Gumbel, Frank, Joe), and algorithmically selects the family 
+# that minimizes the Akaike Information Criterion (AIC) for each spatial connection.
+
 import pandas as pd
 import numpy as np
 import pyvinecopulib as pv
@@ -41,18 +47,22 @@ for index, row in edges_df.iterrows():
     # Extract the uniform pseudo-observations for the two connected spatial nodes
     u_data = u_df[[node1, node2]].dropna().values
     
-    # Fit the bivariate copula
-    bicop = pv.Bicop(u_data, controls)
+    # THE FIX: Create empty copula first, then select/fit to data
+    bicop = pv.Bicop()
+    bicop.select(u_data, controls)
     
-    # Task 6: Extract fitted mathematical parameters and log-likelihood
+    # Safely flatten parameters so it doesn't crash when exporting
+    params = bicop.parameters.flatten() if len(bicop.parameters) > 0 else []
+    
+    # THE FIX: Corrected Python 0-indexing (params and params[1])
     results.append({
         'Tree_Layer': 1,
         'Source_Node': node1,
         'Target_Node': node2,
         'Copula_Family': bicop.family.name,
         'Rotation': bicop.rotation,
-        'Parameter_1': bicop.parameters if len(bicop.parameters) > 0 else np.nan,
-        'Parameter_2': bicop.parameters[2] if len(bicop.parameters) > 1 else np.nan,
+        'Parameter_1': params if len(params) > 0 else np.nan,
+        'Parameter_2': params[1] if len(params) > 1 else np.nan,
         'Tau': bicop.tau,
         'Log_Likelihood': bicop.loglik(u_data),
         'AIC': bicop.aic(u_data)
