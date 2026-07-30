@@ -1,7 +1,7 @@
 
 # **A Spatio-Temporal Vine Copula Mathematical Model for High-Dimensional Dependence in PhilSA Nighttime Light Radiance**
 
-_Thesis Mathematical Modelling Project_
+_Mathematical Modelling Project_
 
 (current temporary sub-data: Google Engine)
 
