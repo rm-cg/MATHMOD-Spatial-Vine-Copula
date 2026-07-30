@@ -92,3 +92,4 @@ with open(output_decay, 'w') as f:
 print(f"Independence decay quantitative check saved to: {output_decay}")
 print(f"Mathematical Global Log-Likelihood: {global_ll:.4f}")
 print(f"Mathematical Global AIC: {global_aic:.4f}")
+# repository label refresh
