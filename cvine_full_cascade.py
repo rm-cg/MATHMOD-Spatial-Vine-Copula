@@ -7,7 +7,7 @@ import os
 
 print("Executing Day 9: Deep Canonical Vine Construction and Global Likelihood...")
 
-# Your new cleaned paths
+
 base_csv_path = '/content/drive/MyDrive/RESEARCH PAPERS/MATHEMATICAL MODELLING/Spatial Vine Copula/MATHMOD_Official_Final_Submission_Archive/Spatial_Matrices_CSV'
 data_file = os.path.join(base_csv_path, 'Uniform_Pseudo_Obs_Matrix.csv')
 output_metrics = os.path.join(base_csv_path, 'Global_Vine_Metrics_Summary.csv')
@@ -20,7 +20,7 @@ u_data = u_df.values
 
 # Heavy-tail copula pool + Independence Copula to test for decay
 copula_pool = [
-    pv.BicopFamily.indep, pv.BicopFamily.gaussian, pv.BicopFamily.student, 
+    pv.BicopFamily.indep, pv.BicopFamily.gaussian, pv.BicopFamily.student,
     pv.BicopFamily.clayton, pv.BicopFamily.gumbel, pv.BicopFamily.frank, pv.BicopFamily.joe
 ]
 
@@ -40,16 +40,16 @@ deep_tree_total = 0
 for tree_idx in range(d - 1):
     tree_layer = tree_idx + 1
     edges_in_tree = vine.pair_copulas[tree_idx]
-    
+
     for edge_idx, bicop in enumerate(edges_in_tree):
         fam = bicop.family.name
-        
+
         # Monitor deep trees (Tree 3+) for spatial decay to the Independence copula
         if tree_layer >= 3:
             deep_tree_total += 1
             if fam == "Independent":
                 independence_count += 1
-                
+
         results.append({
             'Tree_Layer': tree_layer,
             'Edge_Connection': f"Edge_{edge_idx+1}",
@@ -88,7 +88,7 @@ with open(output_decay, 'w') as f:
             f.write("CONCLUSION: Successful spatial decay. Deep conditional networks truncate to independence.\n")
         else:
             f.write("CONCLUSION: Spatial dependence persists in deep trees. Environmental variance may still be present.\n")
-            
+
 print(f"Independence decay quantitative check saved to: {output_decay}")
 print(f"Mathematical Global Log-Likelihood: {global_ll:.4f}")
 print(f"Mathematical Global AIC: {global_aic:.4f}")

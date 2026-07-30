@@ -28,15 +28,15 @@ for index, row in tree1_df.iterrows():
     node1 = row['Source_Node']
     node2 = row['Target_Node']
     family = str(row['Copula_Family']).lower()
-    
+
     # THE ULTIMATE FIX: Strip brackets, split the string, and use pop(0) to bypass bracket errors
     par_raw = str(row['Parameter_1']).replace('[', '').replace(']', '').replace(',', ' ').strip()
     par_elements = par_raw.split()
-    
+
     # Safely extract the first number by popping it off the list
     par_str = par_elements.pop(0)
     par = float(par_str)
-    
+
     # Safely extract the second number by popping it off the list (if it exists)
     if len(par_elements) > 0:
         par2_str = par_elements.pop(0)
@@ -45,11 +45,11 @@ for index, row in tree1_df.iterrows():
         # Fallback if it was saved normally
         par2_raw = str(row['Parameter_2']).replace('[', '').replace(']', '').strip()
         par2 = float(par2_raw) if par2_raw not in ['nan', 'None', ''] else np.nan
-    
+
     # 1. Theoretical Tail Dependence
     theo_lam_U = 0.0
     theo_lam_L = 0.0
-    
+
     if 'gumbel' in family:
         theo_lam_U = 2.0 - 2.0**(1.0 / par) if par >= 1.0 else 0.0
     elif 'clayton' in family:
@@ -66,10 +66,10 @@ for index, row in tree1_df.iterrows():
     # 2. Empirical Tail Dependence
     u1 = u_df[node1].values
     u2 = u_df[node2].values
-    
+
     emp_lam_U = np.sum((u1 > t_upper) & (u2 > t_upper)) / (n * (1.0 - t_upper))
     emp_lam_L = np.sum((u1 <= t_lower) & (u2 <= t_lower)) / (n * t_lower)
-    
+
     results.append({
         'Spatial_Node_Pair': f"{node1} - {node2}",
         'Copula_Family': row['Copula_Family'],

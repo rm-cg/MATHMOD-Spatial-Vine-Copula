@@ -1,6 +1,6 @@
 
 # Generates the Python script that extracts the Physical Environmental Covariates.
-# It loads your spatial nodes from the NTL matrix and constructs a matching covariate matrix 
+# It loads spatial nodes from the NTL matrix and constructs a matching covariate matrix
 # containing Land Surface Temperature (LST), NDVI, and NDWI for later machine learning benchmarking.
 
 import pandas as pd

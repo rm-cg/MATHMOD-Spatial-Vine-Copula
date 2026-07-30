@@ -8,7 +8,6 @@ import os
 
 print("Empirical Kendall's Tau and C-Vine Star Topology...")
 
-# YOUR NEW CLEAN PATH
 base_path = '/content/drive/MyDrive/RESEARCH PAPERS/MATHEMATICAL MODELLING/Spatial Vine Copula/MATHMOD_Official_Final_Submission_Archive/Spatial_Matrices_CSV'
 input_file = os.path.join(base_path, 'Uniform_Pseudo_Obs_Matrix.csv')
 output_csv = os.path.join(base_path, 'Tree1_MST_Edge_List.csv')

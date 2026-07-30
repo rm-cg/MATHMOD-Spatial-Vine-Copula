@@ -1,7 +1,7 @@
 
 # Generates the Python script to execute Maximum Likelihood Estimation (MLE) for Tree 1.
-# It loads the MST edges and uniform pseudo-observations, defines the specific copula family pool 
-# (Gaussian, Student-t, Clayton, Gumbel, Frank, Joe), and algorithmically selects the family 
+# It loads the MST edges and uniform pseudo-observations, defines the specific copula family pool
+# (Gaussian, Student-t, Clayton, Gumbel, Frank, Joe), and algorithmically selects the family
 # that minimizes the Akaike Information Criterion (AIC) for each spatial connection.
 
 import pandas as pd
@@ -42,17 +42,17 @@ print("Evaluating pair-copulas via MLE and Akaike Information Criterion (AIC)...
 for index, row in edges_df.iterrows():
     node1 = row['source']
     node2 = row['target']
-    
+
     # Extract the uniform pseudo-observations for the two connected spatial nodes
     u_data = u_df[[node1, node2]].dropna().values
-    
+
     # THE FIX: Create empty copula first, then select/fit to data
     bicop = pv.Bicop()
     bicop.select(u_data, controls)
-    
+
     # Safely flatten parameters so it doesn't crash when exporting
     params = bicop.parameters.flatten() if len(bicop.parameters) > 0 else []
-    
+
     # THE FIX: Corrected Python 0-indexing (params and params[1])
     results.append({
         'Tree_Layer': 1,

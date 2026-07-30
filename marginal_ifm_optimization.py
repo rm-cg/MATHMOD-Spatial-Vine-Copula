@@ -37,7 +37,7 @@ for col in df.columns:
     # Fit Weibull (weibull_min in scipy)
     shape_weibull, loc_weibull, scale_weibull = stats.weibull_min.fit(data, floc=0)
     ll_weibull = np.sum(stats.weibull_min.logpdf(data, shape_weibull, loc=loc_weibull, scale=scale_weibull))
-    aic_weibull = 2 * 2 - 2 * ll_weibull  
+    aic_weibull = 2 * 2 - 2 * ll_weibull
 
     # Automatically lock in the distribution yielding the strictly lowest AIC score
     if aic_lognorm < aic_weibull:

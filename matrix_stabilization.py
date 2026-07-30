@@ -18,7 +18,7 @@ print(f"Applying spatial noise filter offset: epsilon = {epsilon}")
 
 # THE FIX: Apply offset to all 5 spatial nodes instead of just 'Radiance'
 for col in df.columns:
-    if col != 'Date': 
+    if col != 'Date':
         df[col] = np.where(df[col] <= 0, epsilon, df[col])
 
 # Task 6: Export stabilized matrix

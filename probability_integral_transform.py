@@ -1,7 +1,7 @@
 
-# It uses the marginal distributions fit in Day 3 to transform the physical NTL data into uniform 
-# pseudo-observations strictly bounded between 0 and 1. It also generates diagnostic histograms 
-# so you can visually prove the transformation to your defense panel.
+# It uses the marginal distributions fit in Day 3 to transform the physical NTL data into uniform
+# pseudo-observations strictly bounded between 0 and 1. It also generates diagnostic histograms
+# to visually prove the transformation to defense panel.
 
 import pandas as pd
 import numpy as np
@@ -36,7 +36,7 @@ for index, row in params_df.iterrows():
     dist = row['Best_Distribution']
     shape = row['Shape_Parameter']
     scale = row['Scale_Parameter']
-    
+
     if node in df.columns:
         data = df[node].dropna()
         if dist == 'Weibull':
@@ -44,10 +44,10 @@ for index, row in params_df.iterrows():
             u_scores = stats.weibull_min.cdf(data, c=shape, loc=0, scale=scale)
         elif dist == 'Log-Normal':
             u_scores = stats.lognorm.cdf(data, s=shape, loc=0, scale=scale)
-            
+
         u_df[node] = u_scores
         print(f"PIT mathematically applied for {node} using {dist} CDF.")
-        
+
         # Task 6: Generate diagnostic PIT histogram plots
         plt.figure(figsize=(6, 4))
         plt.hist(u_scores, bins=20, color='skyblue', edgecolor='black')
