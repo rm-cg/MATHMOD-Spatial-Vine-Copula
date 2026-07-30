@@ -33,3 +33,4 @@ covariate_df['NDWI'] = np.random.uniform(-0.5, 0.5, size=len(df_ntl))
 # Export the covariate matrix
 covariate_df.to_csv(output_csv, index=False)
 print(f"Physical Environmental Covariates successfully extracted and saved to: {output_csv}")
+# repository label refresh
